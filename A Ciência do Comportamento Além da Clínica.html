@@ -1,0 +1,723 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sua Clínica em Destaque</title>
+    <style>
+        @import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;600;700&family=Source+Sans+Pro:wght@300;400;600&display=swap');
+
+        :root {
+            --primary: #2C5F5D;
+            --secondary: #E8F4F3;
+            --accent: #D4A574;
+            --text: #2D3436;
+            --text-light: #636E72;
+            --white: #FFFFFF;
+            --gradient-start: #2C5F5D;
+            --gradient-end: #1A3A39;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Source Sans Pro', sans-serif;
+            color: var(--text);
+            line-height: 1.8;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+        }
+
+        .ebook-container {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--white);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.15);
+            overflow: hidden;
+        }
+
+        /* CAPA */
+        .cover {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--white);
+            padding: 80px 60px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cover::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 600px;
+            height: 600px;
+            background: rgba(255,255,255,0.03);
+            border-radius: 50%;
+        }
+
+        .cover::after {
+            content: '';
+            position: absolute;
+            bottom: -30%;
+            left: -10%;
+            width: 400px;
+            height: 400px;
+            background: rgba(212, 165, 116, 0.1);
+            border-radius: 50%;
+        }
+
+        .cover-badge {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 8px 24px;
+            border-radius: 30px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            margin-bottom: 30px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.2rem;
+            font-weight: 700;
+            line-height: 1.2;
+            margin-bottom: 20px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover h1 span {
+            color: var(--accent);
+            font-style: italic;
+        }
+
+        .cover-subtitle {
+            font-size: 1.3rem;
+            font-weight: 300;
+            opacity: 0.95;
+            max-width: 600px;
+            margin: 0 auto 40px;
+            position: relative;
+            z-index: 1;
+        }
+
+        .cover-author {
+            font-size: 1rem;
+            opacity: 0.8;
+            position: relative;
+            z-index: 1;
+        }
+
+        /* CONTEÚDO */
+        .content {
+            padding: 60px;
+        }
+
+        .section {
+            margin-bottom: 60px;
+        }
+
+        .section-header {
+            display: flex;
+            align-items: center;
+            margin-bottom: 30px;
+            padding-bottom: 15px;
+            border-bottom: 3px solid var(--secondary);
+        }
+
+        .section-number {
+            background: var(--primary);
+            color: var(--white);
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-family: 'Playfair Display', serif;
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-right: 20px;
+            flex-shrink: 0;
+        }
+
+        .section-title {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+            margin: 30px 0 15px;
+            font-weight: 600;
+        }
+
+        p {
+            margin-bottom: 20px;
+            font-size: 1.05rem;
+            color: var(--text);
+            text-align: justify;
+        }
+
+        .highlight-box {
+            background: var(--secondary);
+            border-left: 4px solid var(--primary);
+            padding: 25px 30px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .highlight-box p {
+            margin: 0;
+            font-style: italic;
+            color: var(--primary);
+            font-weight: 600;
+        }
+
+        .warning-box {
+            background: #FFF5E6;
+            border-left: 4px solid var(--accent);
+            padding: 25px 30px;
+            margin: 30px 0;
+            border-radius: 0 8px 8px 0;
+        }
+
+        .warning-box strong {
+            color: #B8860B;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+
+        .stat-card {
+            background: var(--white);
+            border: 2px solid var(--secondary);
+            padding: 25px;
+            text-align: center;
+            border-radius: 12px;
+            transition: all 0.3s ease;
+        }
+
+        .stat-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 30px rgba(44, 95, 93, 0.15);
+            border-color: var(--primary);
+        }
+
+        .stat-number {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.5rem;
+            color: var(--primary);
+            font-weight: 700;
+            display: block;
+        }
+
+        .stat-label {
+            font-size: 0.9rem;
+            color: var(--text-light);
+            margin-top: 5px;
+        }
+
+        ul {
+            margin: 20px 0;
+            padding-left: 30px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            position: relative;
+        }
+
+        li::marker {
+            color: var(--primary);
+        }
+
+        .timeline {
+            position: relative;
+            padding-left: 40px;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            left: 15px;
+            top: 0;
+            bottom: 0;
+            width: 2px;
+            background: var(--secondary);
+        }
+
+        .timeline-item {
+            position: relative;
+            margin-bottom: 40px;
+            padding: 25px;
+            background: var(--white);
+            border: 1px solid #e0e0e0;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: -33px;
+            top: 30px;
+            width: 16px;
+            height: 16px;
+            background: var(--primary);
+            border-radius: 50%;
+            border: 3px solid var(--white);
+            box-shadow: 0 0 0 3px var(--secondary);
+        }
+
+        .timeline-phase {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 5px 15px;
+            border-radius: 20px;
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+
+        .timeline-item h4 {
+            font-family: 'Playfair Display', serif;
+            color: var(--primary);
+            font-size: 1.3rem;
+            margin-bottom: 10px;
+        }
+
+        .checklist {
+            background: #F8F9FA;
+            padding: 30px;
+            border-radius: 12px;
+            margin: 30px 0;
+        }
+
+        .checklist h3 {
+            margin-top: 0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist-item {
+            display: flex;
+            align-items: flex-start;
+            margin-bottom: 15px;
+            padding: 15px;
+            background: var(--white);
+            border-radius: 8px;
+            border-left: 3px solid var(--primary);
+        }
+
+        .check-icon {
+            color: var(--primary);
+            font-weight: bold;
+            margin-right: 15px;
+            font-size: 1.2rem;
+        }
+
+        .pricing-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 30px 0;
+            background: var(--white);
+            border-radius: 12px;
+            overflow: hidden;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+        }
+
+        .pricing-table th {
+            background: var(--primary);
+            color: var(--white);
+            padding: 20px;
+            text-align: left;
+            font-weight: 600;
+        }
+
+        .pricing-table td {
+            padding: 20px;
+            border-bottom: 1px solid #eee;
+        }
+
+        .pricing-table tr:last-child td {
+            border-bottom: none;
+        }
+
+        .price {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.4rem;
+            color: var(--primary);
+            font-weight: 700;
+        }
+
+        .cta-section {
+            background: linear-gradient(135deg, var(--gradient-start) 0%, var(--gradient-end) 100%);
+            color: var(--white);
+            padding: 50px;
+            text-align: center;
+            border-radius: 16px;
+            margin-top: 50px;
+        }
+
+        .cta-section h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2rem;
+            margin-bottom: 20px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: var(--accent);
+            color: var(--white);
+            padding: 18px 40px;
+            border-radius: 30px;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 1.1rem;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(212, 165, 116, 0.4);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(212, 165, 116, 0.5);
+        }
+
+        .footer-note {
+            text-align: center;
+            padding: 40px;
+            color: var(--text-light);
+            font-size: 0.9rem;
+            border-top: 1px solid #eee;
+            margin-top: 40px;
+        }
+
+        @media (max-width: 768px) {
+            .cover {
+                padding: 50px 30px;
+            }
+
+            .cover h1 {
+                font-size: 2.2rem;
+            }
+
+            .content {
+                padding: 40px 25px;
+            }
+
+            .section-header {
+                flex-direction: column;
+                text-align: center;
+            }
+
+            .section-number {
+                margin-right: 0;
+                margin-bottom: 15px;
+            }
+        }
+    </style>
+<base target="_blank">
+</head>
+<body>
+    <div class="ebook-container">
+        <!-- CAPA -->
+        <section class="cover">
+            <div class="cover-badge">Material Estratégico Exclusivo</div>
+            <h1>A Ciência do Comportamento <span>Além da Clínica</span></h1>
+            <p class="cover-subtitle">Como se Tornar a Referência em Autismo e ABA em Extrema e Região</p>
+            <p class="cover-author">Estratégia Digital para Profissionais da Saúde</p>
+        </section>
+
+        <!-- CONTEÚDO -->
+        <div class="content">
+
+            <!-- SEÇÃO 1: INTRODUÇÃO -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">01</div>
+                    <h2 class="section-title">A Quebra de Barreiras</h2>
+                </div>
+
+                <p>Você já construiu algo valioso. Com vários seguidores nas redes sociais, demonstrou comprometimento com a disseminação do conhecimento sobre autismo, ABA e neuropsicologia. Isso é um excelente começo.</p>
+
+                <div class="highlight-box">
+                    <p>"Infelismente seguidores não são necessariamente pacientes. Saiba que hoje a internet é o seu principal consultório (digital), e sem as configurações corretas, você permanece invisível para quem busca socorro imediato."</p>
+                </div>
+
+                <p>Enquanto você dedica horas ao atendimento clínico humanizado, muitos pais em Extrema, Camanducaia e cidades vizinhas digitam "psicólogo autismo" no Google e não encontram sua clínica. O algoritmo não reconhece sua expertise — ainda.</p>
+
+                <p>Este material foi desenvolvido para transformar sua presença digital em uma ponte entre sua competência técnica e as famílias que precisam desesperadamente dos seus serviços.</p>
+            </section>
+
+            <!-- SEÇÃO 2: AS DORES -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">02</div>
+                    <h2 class="section-title">As Dores da Especialista</h2>
+                </div>
+
+                <h3>O Conflito entre Clínica e Marketing</h3>
+                <p>A dificuldade de conciliar o atendimento clínico humanizado com a gestão técnica de redes sociais é real e exige tempo e dedicação. Você não estudou anos para se tornar gestora de mídias — estudou para transformar vidas através da ciência do comportamento.</p>
+
+                <h3>A Frustração da Não-Conversão</h3>
+                <p>Postar conteúdo de qualidade e não ver conversão em agendamentos gera desgaste. Cada publicação bem elaborada que não gera retorno representa tempo investido sem resultado prático para seu consultório.</p>
+
+                <div class="warning-box">
+                    <strong>O Risco da Invisibilidade:</strong> Ser "apenas mais um perfil" em vez de uma autoridade local significa perder pacientes para profissionais menos qualificados, mas melhor posicionados digitalmente.
+                </div>
+
+                <h3>O Custo da Oportunidade Perdida</h3>
+                <p>Se uma sessão de ABA custa R$ "X", a perda de apenas "Alguns" novos pacientes por mês devido à falta de posicionamento no Google ou Instagram profissional representa uma perda anual superior a <strong>R$ xx.xxx,xx</strong>.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">R$ xxK+</span>
+                        <span class="stat-label">Perda Anual Estimada</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">X</span>
+                        <span class="stat-label">Pacientes/Mês Perdidos</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">6K</span>
+                        <span class="stat-label">Seguidores Atuais</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 3: SOLUÇÃO -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">03</div>
+                    <h2 class="section-title">A Solução Multi-Canal</h2>
+                </div>
+
+                <h3>Google Maps: O Imediato</h3>
+                <p>Quando um pai em Extrema ou Camanducaia digita "Psicólogo Autismo", você precisa aparecer. Não na segunda página — na primeira, com informações completas, fotos profissionais e acesso direto ao WhatsApp.</p>
+
+                <p>A configuração técnica do Google Meu Negócio captura leads <strong>quentes</strong>: pessoas que precisam de ajuda agora e estão prontas para agendar.</p>
+
+                <h3>Ecossistema Digital Profissional</h3>
+                <ul>
+                    <li><strong>Site/Landing Page:</strong> Profissionalismo que converte visitantes em pacientes</li>
+                    <li><strong>WhatsApp Business:</strong> Separação clara entre pessoal e profissional, com automações estratégicas</li>
+                    <li><strong>Identidade Visual:</strong> Estética que transmite confiança e seriedade na área da saúde</li>
+                </ul>
+
+                <h3>Expansão Geográfica Estratégica</h3>
+                <p>A internet permite que você atenda pacientes de cidades vizinhas que não possuem especialistas em ABA. Extrema pode ser seu centro de operações, mas seu alcance vai muito além.</p>
+            </section>
+
+            <!-- SEÇÃO 4: CRONOLOGIA -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">04</div>
+                    <h2 class="section-title">Cronologia de Trabalho</h2>
+                </div>
+
+                <p>Confiança vem de resultados mensuráveis. Apresentamos uma linha do tempo realista de transformação digital:</p>
+
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <span class="timeline-phase">Semana 1 - Degustação</span>
+                        <h4>Otimização Imediata do Google Maps</h4>
+                        <p>Auditoria completa e otimização do Perfil de Empresa no Google. Resultado: aumento imediato nas visualizações do perfil e a perspectiva de cliques para o WhatsApp. É o "ganho rápido" que você sentirá em dias.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-phase">Mês 1 - Fundação</span>
+                        <h4>Identidade e Estrutura</h4>
+                        <p>Criação de identidade visual profissional para postagens, configuração do WhatsApp Business com automações básicas, e início do cronograma de postagens estratégicas focadas em ABA, TCC e Neuropsicologia.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-phase">Mês 2-3 - Crescimento</span>
+                        <h4>Tráfego e Autoridade</h4>
+                        <p>Criação de Landing Page otimizada e início de campanhas pagas (Google Ads/Meta Ads) para público local. O posicionamento orgânico ganha corpo enquanto o tráfego pago acelera resultados.</p>
+                    </div>
+
+                    <div class="timeline-item">
+                        <span class="timeline-phase">Longo Prazo - Consolidação</span>
+                        <h4>Gestão Contínua e Autoridade</h4>
+                        <p>Gestão contínua de comunidade, resposta a comentários, análise de métricas mensais e manutenção da primeira página no Google para termos estratégicos.</p>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 5: CHECKLIST -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">05</div>
+                    <h2 class="section-title">Escopo Completo do Serviço</h2>
+                </div>
+
+                <div class="checklist">
+                    <h3>✓ Google Meu Negócio</h3>
+                    <div class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        <div>Otimização completa do perfil, fotos profissionais, gestão de avaliações e palavras-chave locais estratégicas</div>
+                    </div>
+
+                    <h3>✓ Social Media (Instagram/Facebook)</h3>
+                    <div class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        <div>Design de posts com estética de alto nível, legendas técnicas sem termos pejorativos, Reels educativos</div>
+                    </div>
+
+                    <h3>✓ Gestão de Comunidade</h3>
+                    <div class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        <div>Resposta a comentários e filtragem de mensagens de possíveis clientes qualificados</div>
+                    </div>
+
+                    <h3>✓ Tráfego Pago</h3>
+                    <div class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        <div>Criação e gestão de anúncios para quem busca por "Autismo" ou "Psicólogo em Extrema"</div>
+                    </div>
+
+                    <h3>✓ Desenvolvimento Web</h3>
+                    <div class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        <div>Criação de página de conversão otimizada para captura de leads</div>
+                    </div>
+
+                    <h3>✓ Consultoria de Vendas</h3>
+                    <div class="checklist-item">
+                        <span class="check-icon">✓</span>
+                        <div>Orientação sobre uso do WhatsApp Business para não perder leads potenciais</div>
+                    </div>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 6: INVESTIMENTO -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">06</div>
+                    <h2 class="section-title">Investimento</h2>
+                </div>
+
+                <p>Considerando o valor da sua sessão (R$ xxx+) e o retorno potencial, apresentamos uma estrutura de investimento acessível:</p>
+
+                <table class="pricing-table">
+                    <thead>
+                        <tr>
+                            <th>Serviço</th>
+                            <th>Investimento</th>
+                            <th>Observação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td><strong>Setup Inicial</strong><br><small>Google Maps + Identidade Visual + Landing Page</small></td>
+                            <td class="price">R$ 600 - "Á combinar, conforme o aumento do tráfego" </td>
+                            <td>Pagamento único</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Gestão Mensal</strong><br><small>Social Media + Google + Relatórios</small></td>
+                            <td class="price">R$ 300 - "Á combinar, conforme o aumento do tráfego"</td>
+                            <td>/mês</td>
+                        </tr>
+                        <tr>
+                            <td><strong>Tráfego Pago</strong><br><small>Gestão de campanhas</small></td>
+                            <td class="price">R$ 200 - "Á combinar, conforme o aumento do tráfego</td>
+                            <td>/mês + verba ads</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+                <div class="highlight-box">
+                    <p>Retorno sobre Investimento: Com a captura de apenas 2 novos pacientes por mês em uma consulta em torno (R$ 400), a gestão mensal já se paga. Todo paciente adicional representa lucro líquido e expansão de autoridade.</p>
+                </div>
+            </section>
+
+            <!-- SEÇÃO 7: DEGUSTAÇÃO -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">07</div>
+                    <h2 class="section-title">Semana de Degustação</h2>
+                </div>
+
+                <p>Para que você experimente resultados concretos antes de qualquer compromisso maior, oferecemos:</p>
+
+                <div class="warning-box">
+                    <strong>Proposta Especial:</strong> Uma semana de Otimização de Google Maps + 1 Post de Autoridade (Collab)
+                </div>
+
+                <ul>
+                    <li>Arrumamos seu endereço, palavras-chave e fotos no Google</li>
+                    <li>Geramos relatório de "Aumento de visibilidade" em poucos dias</li>
+                    <li>Trabalho técnico que não custa dinheiro de anúncio</li>
+                    <li>Prova concreta de que sabemos "abrir as portas" da internet para você</li>
+                </ul>
+
+                <p>Este é um trabalho técnico que dominamos, sem custo de mídia, e que demonstra imediatamente o potencial de transformação da sua presença digital.</p>
+            </section>
+
+            <!-- SEÇÃO 8: DIFERENCIAL -->
+            <section class="section">
+                <div class="section-header">
+                    <div class="section-number">08</div>
+                    <h2 class="section-title">Nosso Diferencial</h2>
+                </div>
+
+                <p>Com 30 anos de expertise em artes visuais, garantimos que a <strong>estética do seu perfil será impecável</strong>. Na área da saúde, onde confiança e seriedade são fundamentais, a aparência profissional das suas comunicações é tão importante quanto o conteúdo técnico.</p>
+
+                <p>Não criamos apenas posts — criamos uma <strong>experiência visual de autoridade</strong> que faz pais confiarem em você antes mesmo do primeiro atendimento.</p>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <span class="stat-number">30</span>
+                        <span class="stat-label">Anos de Expertise Visual</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">100%</span>
+                        <span class="stat-label">Foco em Saúde/Autismo</span>
+                    </div>
+                    <div class="stat-card">
+                        <span class="stat-number">Local</span>
+                        <span class="stat-label">Conhecimento de Extrema/Região</span>
+                    </div>
+                </div>
+            </section>
+
+            <!-- CTA FINAL -->
+            <div class="cta-section">
+                <h2>Pronta para ser a Referência?</h2>
+                <p style="font-size: 1.1rem; opacity: 0.95; margin-bottom: 10px;">Sua expertise clínica merece uma presença digital à altura.</p>
+                <p style="font-size: 1rem; opacity: 0.9;">Vamos conversar sobre como transformar seus seguidores em uma fila de espera de pacientes.</p>
+                <a href="#" class="cta-button">Agendar Conversa Estratégica</a>
+            </div>
+
+            <div class="footer-note">
+                <p>Material estratégico desenvolvido exclusivamente para profissionais da psicologia em Extrema e região.</p>
+                <p style="margin-top: 10px; font-size: 0.85rem;">© 2026 - Todos os direitos reservados</p>
+            </div>
+
+        </div>
+    </div>
+</body>
+</html>
